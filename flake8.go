@@ -76,5 +76,26 @@ func prettyPrint(text[] uint8) {
 	}
 }
 
+func main()  {
+	
+    errorCmd := flag.NewFlagSet("error", flag.ExitOnError)
+    errorPrettyEnable := errorCmd.Bool("p",false, "Enable pretty print")
+    errorCode := errorCmd.String("code","", "Error code for flake8")
 
+    if len(os.Args) < 2{
+        fmt.Println("expected 'error' subcommand")
+        os.Exit(1)
+    }
+
+    switch os.Args[1]{
+        case "error":
+                errorCmd.Parse(os.Args[2:])
+                api(*errorPrettyEnable, *errorCode)
+        default:
+           fmt.Println("expected 'error' subcommand")
+            os.Exit(1)
+
+
+	}
+}
 
